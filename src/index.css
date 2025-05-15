@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -33,22 +34,15 @@
     --ring: 222.2 84% 4.9%;
 
     --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    
+    /* Admin Theme Colors */
+    --admin-primary: 215 100% 50%;
+    --admin-primary-foreground: 0 0% 100%;
+    --admin-secondary: 215 70% 40%;
+    --admin-accent: 25 100% 55%;
+    --admin-sidebar: 220 25% 15%;
+    --admin-sidebar-foreground: 0 0% 100%;
+    --admin-navbar: 220 25% 20%;
   }
 
   .dark {
@@ -79,14 +73,6 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 
@@ -98,4 +84,99 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Custom Admin Panel Styles */
+.admin-sidebar {
+  background-color: hsl(var(--admin-sidebar));
+  color: hsl(var(--admin-sidebar-foreground));
+  transition: width 0.3s ease;
+}
+
+.admin-content {
+  transition: margin-left 0.3s ease;
+}
+
+.admin-card {
+  @apply bg-white rounded-md shadow-md p-4 hover:shadow-lg transition-shadow;
+}
+
+.admin-table {
+  @apply w-full text-sm text-left;
+}
+
+.admin-table th {
+  @apply py-3 px-4 font-semibold text-gray-600 bg-gray-100;
+}
+
+.admin-table td {
+  @apply py-3 px-4 border-t border-gray-200;
+}
+
+.admin-table tbody tr:hover {
+  @apply bg-gray-50;
+}
+
+.status-approved {
+  @apply bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium;
+}
+
+.status-pending {
+  @apply bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-medium;
+}
+
+.status-rejected {
+  @apply bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs font-medium;
+}
+
+.action-button {
+  @apply bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm font-medium transition-colors;
+}
+
+.add-button {
+  @apply bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded text-sm font-medium flex items-center gap-2 transition-colors;
+}
+
+.filter-input {
+  @apply border border-gray-300 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+}
+
+.filter-select {
+  @apply border border-gray-300 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white;
+}
+
+.sidebar-menu-item {
+  @apply flex items-center gap-3 py-2 px-4 text-sm hover:bg-gray-700 rounded-md transition-colors;
+}
+
+.sidebar-menu-item.active {
+  @apply bg-blue-600;
+}
+
+.hamburger-icon {
+  @apply w-6 h-6 flex flex-col justify-center gap-1.5 cursor-pointer;
+}
+
+.hamburger-line {
+  @apply bg-white h-0.5 transition-all;
+}
+
+.dashboard-stat-card {
+  @apply bg-white rounded-lg shadow p-4 flex flex-col;
+}
+
+.dashboard-stat-value {
+  @apply text-2xl font-bold mt-2;
+}
+
+.dashboard-stat-title {
+  @apply text-sm text-gray-500;
+}
+
+.form-section {
+  @apply border rounded-md p-4 mb-4;
+}
+
+.form-section-title {
+  @apply text-lg font-medium mb-4;
 }
