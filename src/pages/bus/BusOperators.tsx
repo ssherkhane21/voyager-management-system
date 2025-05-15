@@ -30,7 +30,7 @@ const BusOperators = () => {
       )
     },
     { 
-      key: 'actions', 
+      key: 'actions' as 'actions', 
       header: 'Actions',
       render: (operator: BusOperator) => (
         <button 
@@ -49,7 +49,7 @@ const BusOperators = () => {
 
   const filterOptions = [
     {
-      key: 'status',
+      key: 'status' as keyof BusOperator,
       label: 'Status',
       options: [
         { label: 'Approved', value: 'Approved' },

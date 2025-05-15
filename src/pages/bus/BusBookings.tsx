@@ -27,7 +27,7 @@ const BusBookings = () => {
       render: (booking: BusBooking) => <StatusBadge status={booking.status} />
     },
     { 
-      key: 'actions', 
+      key: 'actions' as 'actions', 
       header: 'Actions',
       render: (booking: BusBooking) => (
         <button className="action-button flex items-center">
@@ -40,7 +40,7 @@ const BusBookings = () => {
 
   const filterOptions = [
     {
-      key: 'status',
+      key: 'status' as keyof BusBooking,
       label: 'Status',
       options: [
         { label: 'Completed', value: 'Completed' },
@@ -49,7 +49,7 @@ const BusBookings = () => {
       ]
     },
     {
-      key: 'from',
+      key: 'from' as keyof BusBooking,
       label: 'From',
       options: [
         { label: 'Mumbai', value: 'Mumbai' },
@@ -59,7 +59,7 @@ const BusBookings = () => {
       ]
     },
     {
-      key: 'to',
+      key: 'to' as keyof BusBooking,
       label: 'To',
       options: [
         { label: 'Pune', value: 'Pune' },

@@ -9,6 +9,12 @@ interface Column<T> {
   width?: string;
 }
 
+interface FilterOption<T> {
+  key: keyof T | string;
+  label: string;
+  options: { label: string; value: string }[];
+}
+
 interface DataTableProps<T> {
   columns: Column<T>[];
   data: T[];
@@ -17,11 +23,7 @@ interface DataTableProps<T> {
   searchable?: boolean;
   exportable?: boolean;
   filterable?: boolean;
-  filterOptions?: {
-    key: keyof T;
-    label: string;
-    options: { label: string; value: string }[];
-  }[];
+  filterOptions?: FilterOption<T>[];
 }
 
 function DataTable<T>({
@@ -54,7 +56,7 @@ function DataTable<T>({
     return matchesSearch && matchesFilters;
   });
 
-  const handleFilterChange = (key: keyof T, value: string) => {
+  const handleFilterChange = (key: string, value: string) => {
     setFilters(prev => ({
       ...prev,
       [key]: value
@@ -129,7 +131,7 @@ function DataTable<T>({
                 <label className="text-xs mb-1 text-gray-600">{option.label}</label>
                 <select
                   value={filters[option.key as string] || ''}
-                  onChange={(e) => handleFilterChange(option.key, e.target.value)}
+                  onChange={(e) => handleFilterChange(String(option.key), e.target.value)}
                   className="filter-select"
                 >
                   <option value="">All</option>
