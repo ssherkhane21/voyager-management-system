@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -13,6 +12,26 @@ import Dashboard from "./pages/Dashboard";
 import BusOperators from "./pages/bus/BusOperators";
 import BusOperatorDetails from "./pages/bus/BusOperatorDetails";
 import BusBookings from "./pages/bus/BusBookings";
+
+// Hotel Management
+import HotelManagers from "./pages/hotel/HotelManagers";
+import HotelManagerDetails from "./pages/hotel/HotelManagerDetails";
+import HotelBookings from "./pages/hotel/HotelBookings";
+
+// Taxi Management
+import TaxiDrivers from "./pages/taxi/TaxiDrivers";
+import TaxiDriverDetails from "./pages/taxi/TaxiDriverDetails";
+import TaxiBookings from "./pages/taxi/TaxiBookings";
+
+// Bike Management
+import BikeRiders from "./pages/bike/BikeRiders";
+import BikeRiderDetails from "./pages/bike/BikeRiderDetails";
+import BikeBookings from "./pages/bike/BikeBookings";
+
+// Commission, Coupons, Wallet
+import CommissionManagement from "./pages/commission/CommissionManagement";
+import Coupons from "./pages/coupons/Coupons";
+import Wallet from "./pages/wallet/Wallet";
 
 const queryClient = new QueryClient();
 
@@ -32,7 +51,25 @@ const App = () => (
             <Route path="/bus-management/operators/:id" element={<BusOperatorDetails />} />
             <Route path="/bus-management/bookings" element={<BusBookings />} />
             
-            {/* Add more routes for other sections */}
+            {/* Hotel Management Routes */}
+            <Route path="/hotel-management/managers" element={<HotelManagers />} />
+            <Route path="/hotel-management/managers/:id" element={<HotelManagerDetails />} />
+            <Route path="/hotel-management/bookings" element={<HotelBookings />} />
+            
+            {/* Taxi Management Routes */}
+            <Route path="/taxi-management/drivers" element={<TaxiDrivers />} />
+            <Route path="/taxi-management/drivers/:id" element={<TaxiDriverDetails />} />
+            <Route path="/taxi-management/bookings" element={<TaxiBookings />} />
+            
+            {/* Bike Management Routes */}
+            <Route path="/bike-management/riders" element={<BikeRiders />} />
+            <Route path="/bike-management/riders/:id" element={<BikeRiderDetails />} />
+            <Route path="/bike-management/bookings" element={<BikeBookings />} />
+            
+            {/* Other Management Routes */}
+            <Route path="/commission-management" element={<CommissionManagement />} />
+            <Route path="/coupons" element={<Coupons />} />
+            <Route path="/wallet" element={<Wallet />} />
             
             {/* Catch-all route */}
             <Route path="*" element={<NotFound />} />
