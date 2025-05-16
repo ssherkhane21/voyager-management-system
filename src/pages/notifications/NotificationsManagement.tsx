@@ -12,6 +12,7 @@ import { toast } from '@/hooks/use-toast';
 import DataTable from '@/components/ui/DataTable';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 // Mock data for email templates
 type EmailTemplate = {
@@ -442,10 +443,10 @@ const NotificationsManagement = () => {
                     <label className="text-sm font-medium">Email Body</label>
                     <p className="text-xs text-gray-500 mb-2">
                       You can use HTML tags for formatting and these variables: 
-                      <code className="bg-gray-100 px-1 mx-1">{{`{{customer_name}}`}}</code>,
-                      <code className="bg-gray-100 px-1 mx-1">{{`{{booking_id}}`}}</code>,
-                      <code className="bg-gray-100 px-1 mx-1">{{`{{amount}}`}}</code>,
-                      <code className="bg-gray-100 px-1 mx-1">{{`{{expiry_date}}`}}</code>
+                      <code className="bg-gray-100 px-1 mx-1">{"{{customer_name}}"}</code>,
+                      <code className="bg-gray-100 px-1 mx-1">{"{{booking_id}}"}</code>,
+                      <code className="bg-gray-100 px-1 mx-1">{"{{amount}}"}</code>,
+                      <code className="bg-gray-100 px-1 mx-1">{"{{expiry_date}}"}</code>
                     </p>
                     <Textarea
                       value={currentTemplate?.body || ''}
