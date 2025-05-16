@@ -142,6 +142,15 @@ export interface TaxiDriver {
   city?: string;
   status: 'active' | 'inactive' | 'pending' | 'Approved' | 'Rejected' | 'Submitted' | 'Blocked' | 'Pending';
   joinDate?: string;
+  // Additional properties used in TaxiDriverDetails.tsx
+  age?: number;
+  address?: string;
+  experience?: number;
+  idProofs?: string[];
+  vehicleRegistrationNumber?: string;
+  vehicleInsurance?: string;
+  vehicleRegistrationCertificate?: string;
+  vehiclePhotos?: string[];
 }
 
 // Taxi Booking related types
