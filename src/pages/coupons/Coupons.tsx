@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { Plus, Tag } from 'lucide-react';
+import { Plus, Tag, Percent, DollarSign } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 import DataTable from '@/components/ui/DataTable';
 import { Coupon } from '@/types/admin';
@@ -9,15 +9,19 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from '@/hooks/use-toast';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Label } from '@/components/ui/label';
 
-// Mock data for coupons
+// Modified mock data for coupons to include discount type
 const mockCoupons: Coupon[] = [
   {
     id: "1",
     name: "WELCOME10",
     code: "WELCOME10",
     serviceType: "All",
+    discountType: "percentage", 
     discountPercentage: 10,
+    discountAmount: null,
     startDate: "2023-06-01T00:00",
     expiryDate: "2023-12-31T23:59",
     isActive: true
@@ -27,7 +31,9 @@ const mockCoupons: Coupon[] = [
     name: "SUMMER20",
     code: "SUMMER20",
     serviceType: "Hotel",
+    discountType: "percentage",
     discountPercentage: 20,
+    discountAmount: null,
     startDate: "2023-05-01T00:00",
     expiryDate: "2023-09-30T23:59",
     isActive: true
@@ -37,17 +43,21 @@ const mockCoupons: Coupon[] = [
     name: "RIDE15",
     code: "RIDE15",
     serviceType: "Taxi",
+    discountType: "percentage",
     discountPercentage: 15,
+    discountAmount: null,
     startDate: "2023-07-01T00:00",
     expiryDate: "2023-10-15T23:59",
     isActive: true
   },
   {
     id: "4",
-    name: "BUS25",
-    code: "BUS25",
+    name: "BUS100",
+    code: "BUS100",
     serviceType: "Bus",
-    discountPercentage: 25,
+    discountType: "fixed",
+    discountPercentage: null,
+    discountAmount: 100,
     startDate: "2023-06-15T00:00",
     expiryDate: "2023-11-30T23:59",
     isActive: false
@@ -63,7 +73,9 @@ const Coupons = () => {
     name: '',
     code: '',
     serviceType: 'All',
+    discountType: 'percentage',
     discountPercentage: 0,
+    discountAmount: null,
     startDate: new Date().toISOString().split('.')[0].slice(0, 16),
     expiryDate: new Date(new Date().setMonth(new Date().getMonth() + 1)).toISOString().split('.')[0].slice(0, 16),
     isActive: true
@@ -76,7 +88,9 @@ const Coupons = () => {
       name: '',
       code: '',
       serviceType: 'All',
+      discountType: 'percentage',
       discountPercentage: 0,
+      discountAmount: null,
       startDate: new Date().toISOString().split('.')[0].slice(0, 16),
       expiryDate: new Date(new Date().setMonth(new Date().getMonth() + 1)).toISOString().split('.')[0].slice(0, 16),
       isActive: true
@@ -92,6 +106,15 @@ const Coupons = () => {
 
   const handleInputChange = (field: keyof Coupon, value: any) => {
     setCurrentCoupon(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleDiscountTypeChange = (type: 'percentage' | 'fixed') => {
+    setCurrentCoupon(prev => ({ 
+      ...prev, 
+      discountType: type,
+      discountPercentage: type === 'percentage' ? (prev.discountPercentage || 0) : null,
+      discountAmount: type === 'fixed' ? (prev.discountAmount || 0) : null
+    }));
   };
 
   const formatDateTime = (dateTimeString: string) => {
@@ -111,6 +134,27 @@ const Coupons = () => {
       toast({
         title: "Validation Error",
         description: "Please fill in all required fields",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Validate discount values
+    if (currentCoupon.discountType === 'percentage' && 
+        (currentCoupon.discountPercentage === null || currentCoupon.discountPercentage <= 0)) {
+      toast({
+        title: "Invalid Discount",
+        description: "Please enter a valid percentage greater than 0",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (currentCoupon.discountType === 'fixed' && 
+        (currentCoupon.discountAmount === null || currentCoupon.discountAmount <= 0)) {
+      toast({
+        title: "Invalid Discount",
+        description: "Please enter a valid discount amount greater than 0",
         variant: "destructive"
       });
       return;
@@ -168,9 +212,21 @@ const Coupons = () => {
     { key: 'code' as keyof Coupon, header: 'Coupon Code' },
     { key: 'serviceType' as keyof Coupon, header: 'Service Type' },
     { 
-      key: 'discountPercentage' as keyof Coupon, 
+      key: 'discount' as string, 
       header: 'Discount',
-      render: (coupon: Coupon) => <span>{coupon.discountPercentage}%</span>
+      render: (coupon: Coupon) => (
+        <div className="flex items-center">
+          {coupon.discountType === 'percentage' ? (
+            <span className="flex items-center">
+              {coupon.discountPercentage}% <Percent size={14} className="ml-1 text-gray-500" />
+            </span>
+          ) : (
+            <span className="flex items-center">
+              ₹{coupon.discountAmount} <DollarSign size={14} className="ml-1 text-gray-500" />
+            </span>
+          )}
+        </div>
+      )
     },
     { 
       key: 'startDate' as keyof Coupon, 
@@ -192,7 +248,7 @@ const Coupons = () => {
       )
     },
     { 
-      key: 'actions' as 'actions', 
+      key: 'actions' as string, 
       header: 'Actions',
       render: (coupon: Coupon) => (
         <div className="flex items-center space-x-2">
@@ -302,19 +358,59 @@ const Coupons = () => {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium">Discount Percentage</label>
-              <div className="relative">
-                <Input
-                  type="number"
-                  value={currentCoupon.discountPercentage}
-                  onChange={(e) => handleInputChange('discountPercentage', parseFloat(e.target.value) || 0)}
-                  className="pr-8"
-                  min={0}
-                  max={100}
-                />
-                <Tag className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500" size={16} />
-              </div>
+              <label className="text-sm font-medium">Discount Type</label>
+              <RadioGroup 
+                value={currentCoupon.discountType}
+                onValueChange={(value) => handleDiscountTypeChange(value as 'percentage' | 'fixed')}
+                className="flex space-x-4"
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="percentage" id="percentage-discount" />
+                  <Label htmlFor="percentage-discount" className="flex items-center">
+                    <Percent size={16} className="mr-1" /> Percentage
+                  </Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="fixed" id="fixed-discount" />
+                  <Label htmlFor="fixed-discount" className="flex items-center">
+                    <DollarSign size={16} className="mr-1" /> Fixed Amount
+                  </Label>
+                </div>
+              </RadioGroup>
             </div>
+
+            {currentCoupon.discountType === 'percentage' && (
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Discount Percentage</label>
+                <div className="relative">
+                  <Input
+                    type="number"
+                    value={currentCoupon.discountPercentage !== null ? currentCoupon.discountPercentage : 0}
+                    onChange={(e) => handleInputChange('discountPercentage', parseFloat(e.target.value) || 0)}
+                    className="pr-8"
+                    min={0}
+                    max={100}
+                  />
+                  <Percent className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500" size={16} />
+                </div>
+              </div>
+            )}
+
+            {currentCoupon.discountType === 'fixed' && (
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Discount Amount (₹)</label>
+                <div className="relative">
+                  <Input
+                    type="number"
+                    value={currentCoupon.discountAmount !== null ? currentCoupon.discountAmount : 0}
+                    onChange={(e) => handleInputChange('discountAmount', parseFloat(e.target.value) || 0)}
+                    className="pl-8"
+                    min={0}
+                  />
+                  <DollarSign className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500" size={16} />
+                </div>
+              </div>
+            )}
 
             <div className="space-y-2">
               <label className="text-sm font-medium">Start Date and Time</label>

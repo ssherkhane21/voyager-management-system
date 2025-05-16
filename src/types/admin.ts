@@ -1,91 +1,36 @@
 
-export interface ChartData {
-  labels: string[];
-  datasets: {
-    label: string;
-    data: number[];
-    backgroundColor: string;
-    borderColor: string;
-    borderWidth: number;
-  }[];
+// Admin related types
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: 'Admin' | 'Subadmin' | 'Manager';
+  permissions: string[];
+  createdAt: string;
 }
 
-export interface BookingSummary {
-  totalBookings: number;
-  completedBookings: number;
-  cancelledBookings: number;
-  pendingBookings: number;
-  revenue: number;
-}
-
+// Operator related types
 export interface BusOperator {
   id: string;
   name: string;
-  mobile: string;
   email: string;
-  status: 'Approved' | 'Pending' | 'Submitted' | 'Rejected' | 'Blocked';
-  numberOfBuses: number;
-  profilePhoto?: string;
-  address?: string;
-  identityCard?: string;
-  businessLicense?: string;
-  bankAccountNumber?: string;
-  bankAccountDetails?: string;
-  idCardFront?: string;
-  idCardBack?: string;
-  bankName?: string;
-  accountHolderName?: string;
+  phone: string;
+  address: string;
+  city: string;
+  state: string;
+  status: 'active' | 'inactive' | 'pending';
+  busCount: number;
+  joinDate: string;
 }
 
 export interface Bus {
   id: string;
-  registrationNumber: string;
   operatorId: string;
+  registrationNumber: string;
   type: string;
   capacity: number;
-  status: string;
-  manufactureYear: number;
-  lastMaintenance: string;
-  insuranceValidTill: string;
-  route: string;
-}
-
-export interface HotelManager {
-  id: string;
-  name: string;
-  mobile: string;
-  email: string;
-  status: 'Approved' | 'Pending' | 'Submitted' | 'Rejected' | 'Blocked';
-  profilePhoto?: string;
-  hotelName?: string;
-  businessLicense?: string;
-  hotelPhotos?: string[];
-  address?: string;
-  city?: string;
-  locality?: string;
-  landmark?: string;
-  pinCode?: string;
-  totalRooms?: number;
-  standardRooms?: {
-    price: number;
-    numberOfRooms: number;
-    amenities: string[];
-    photos: string[];
-  };
-  luxuryRooms?: {
-    price: number;
-    numberOfRooms: number;
-    amenities: string[];
-    photos: string[];
-  };
-  checkInTime?: string;
-  checkOutTime?: string;
-  amenities?: string[];
-  policyDocuments?: string;
-  bankAccountNumber?: string;
-  bankAccountDetails?: string;
-  idCardFront?: string;
-  idCardBack?: string;
+  amenities: string[];
+  status: 'active' | 'inactive' | 'maintenance';
 }
 
 export interface BusBooking {
@@ -98,7 +43,22 @@ export interface BusBooking {
   to: string;
   journeyDate: string;
   amount: number;
-  status: string;
+  status: 'Completed' | 'Upcoming' | 'Cancelled';
+}
+
+// Hotel related types
+export interface HotelManager {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  hotelName: string;
+  address: string;
+  city: string;
+  state: string;
+  status: 'active' | 'inactive' | 'pending';
+  roomCount: number;
+  joinDate: string;
 }
 
 export interface HotelBooking {
@@ -110,120 +70,106 @@ export interface HotelBooking {
   checkInDate: string;
   checkOutDate: string;
   amount: number;
-  status: string;
+  status: 'Completed' | 'Upcoming' | 'Cancelled';
 }
 
+// Taxi related types
 export interface TaxiDriver {
   id: string;
   name: string;
-  mobile: string;
   email: string;
-  status: 'Approved' | 'Rejected';
-  age?: number;
-  address?: string;
-  experience?: number;
-  idProofs?: string[];
-  vehicleType?: 'Car' | 'Bike';
-  vehicleRegistrationNumber?: string;
-  vehicleInsurance?: string;
-  vehicleRegistrationCertificate?: string;
-  vehiclePhotos?: string[];
+  phone: string;
+  licenseNumber: string;
+  vehicleNumber: string;
+  vehicleType: string;
+  city: string;
+  status: 'active' | 'inactive' | 'pending';
+  joinDate: string;
 }
 
+// Bike related types
 export interface BikeRider {
   id: string;
   name: string;
-  mobile: string;
   email: string;
-  status: 'Approved' | 'Rejected';
-  age?: number;
-  address?: string;
-  experience?: number;
-  idProofs?: string[];
-  vehicleType?: string;
-  vehicleRegistrationNumber?: string;
-  vehicleInsurance?: string;
-  vehicleRegistrationCertificate?: string;
-  vehiclePhotos?: string[];
+  phone: string;
+  licenseNumber: string;
+  bikeNumber: string;
+  bikeModel: string;
+  city: string;
+  status: 'active' | 'inactive' | 'pending';
+  joinDate: string;
 }
 
-export interface TaxiBooking {
-  id: string;
-  customerName: string;
-  driverName: string;
-  from: string;
-  to: string;
-  rideDate: string;
-  vehicleType: string;
-  amount: number;
-  status: string;
-}
-
-export interface BikeBooking {
-  id: string;
-  customerName: string;
-  riderName: string;
-  from: string;
-  to: string;
-  rideDate: string;
-  vehicleType: string;
-  amount: number;
-  status: string;
-}
-
+// Customer related types
 export interface Customer {
   id: string;
   name: string;
   mobile: string;
   email: string;
-  bookingHistory?: (BusBooking | HotelBooking | TaxiBooking | BikeBooking)[];
 }
 
-export interface User {
-  id: string;
-  name: string;
-  email: string;
-  role: 'Admin' | 'Subadmin' | 'Manager';
-  permissions: string[];
-  createdAt: string;
-}
-
+// Commission related types
 export interface Commission {
   id: string;
-  serviceType: 'Bus' | 'Hotel' | 'Taxi' | 'Bike';
-  percentage: number;
+  serviceType: string;
+  percentage: number | null;
+  fixedRate: number | null;
+  commissionType: 'percentage' | 'fixed';
   effectiveFrom: string;
   effectiveTo?: string;
   isActive: boolean;
 }
 
+// Coupon related types
 export interface Coupon {
   id: string;
   name: string;
   code: string;
-  serviceType: 'Bus' | 'Hotel' | 'Taxi' | 'Bike' | 'All';
-  discountPercentage: number;
-  startDate?: string;
+  serviceType: string;
+  discountType: 'percentage' | 'fixed';
+  discountPercentage: number | null;
+  discountAmount: number | null;
+  startDate: string;
   expiryDate: string;
   isActive: boolean;
 }
 
-export interface WalletTransaction {
+// Wallet related types
+export interface Transaction {
   id: string;
   userId: string;
-  userName: string;
-  type: 'Credit' | 'Debit' | 'Transfer' | 'Withdrawal';
   amount: number;
-  date: string;
-  status: 'Completed' | 'Pending' | 'Failed';
+  type: 'credit' | 'debit';
   description: string;
+  date: string;
+  status: 'completed' | 'pending' | 'failed';
 }
 
+// Notification related types
 export interface Notification {
   id: string;
   title: string;
   message: string;
-  recipientType: 'All' | 'Customers' | 'Drivers' | 'Riders' | 'Hotel Managers' | 'Bus Operators';
-  sentAt: string;
-  status: 'Sent' | 'Draft';
+  type: 'info' | 'success' | 'warning' | 'error';
+  read: boolean;
+  createdAt: string;
+  userId?: string;
+}
+
+// Dashboard related types
+export interface BookingSummary {
+  service: string;
+  count: number;
+  percentage: number;
+  trend: 'up' | 'down' | 'flat';
+  color: string;
+}
+
+export interface RevenueData {
+  month: string;
+  bus: number;
+  hotel: number;
+  taxi: number;
+  bike: number;
 }

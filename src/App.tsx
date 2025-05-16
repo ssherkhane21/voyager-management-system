@@ -32,14 +32,20 @@ import BikeBookings from "./pages/bike/BikeBookings";
 
 // Customer Management
 import CustomerManagement from "./pages/customers/CustomerManagement";
+import CustomerDetails from "./pages/customers/CustomerDetails";
 
 // User Management
 import UserManagement from "./pages/users/UserManagement";
+import UserDetails from "./pages/users/UserDetails";
 
 // Commission, Coupons, Wallet
 import CommissionManagement from "./pages/commission/CommissionManagement";
 import Coupons from "./pages/coupons/Coupons";
 import Wallet from "./pages/wallet/Wallet";
+
+// New Pages
+import NotificationsManagement from "./pages/notifications/NotificationsManagement";
+import Settings from "./pages/settings/Settings";
 
 const queryClient = new QueryClient();
 
@@ -78,14 +84,18 @@ const App = () => (
             
             {/* Customer Management Routes */}
             <Route path="/customer-management" element={<CustomerManagement />} />
+            <Route path="/customer-management/:customerId" element={<CustomerDetails />} />
             
             {/* User Management Routes */}
             <Route path="/user-management" element={<UserManagement />} />
+            <Route path="/user-management/:userId" element={<UserDetails />} />
             
             {/* Other Management Routes */}
             <Route path="/commission-management" element={<CommissionManagement />} />
             <Route path="/coupons" element={<Coupons />} />
             <Route path="/wallet" element={<Wallet />} />
+            <Route path="/notifications" element={<NotificationsManagement />} />
+            <Route path="/settings" element={<Settings />} />
             
             {/* Catch-all route */}
             <Route path="*" element={<NotFound />} />
