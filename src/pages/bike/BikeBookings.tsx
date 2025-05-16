@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Eye } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
@@ -127,13 +126,64 @@ const BikeBookings = () => {
       </div>
 
       <DataTable
-        columns={columns}
+        columns={[
+          { key: 'id' as keyof BikeBooking, header: 'Booking ID' },
+          { key: 'customerName' as keyof BikeBooking, header: 'Customer Name' },
+          { key: 'riderName' as keyof BikeBooking, header: 'Rider Name' },
+          { key: 'from' as keyof BikeBooking, header: 'From' },
+          { key: 'to' as keyof BikeBooking, header: 'To' },
+          { key: 'rideDate' as keyof BikeBooking, header: 'Ride Date' },
+          { key: 'vehicleType' as keyof BikeBooking, header: 'Vehicle Type' },
+          { 
+            key: 'amount' as keyof BikeBooking, 
+            header: 'Amount',
+            render: (booking: BikeBooking) => <span>${booking.amount.toFixed(2)}</span>
+          },
+          { 
+            key: 'status' as keyof BikeBooking, 
+            header: 'Status',
+            render: (booking: BikeBooking) => <StatusBadge status={booking.status} />
+          },
+          { 
+            key: 'actions' as any, 
+            header: 'Actions',
+            render: (booking: BikeBooking) => (
+              <button 
+                className="action-button flex items-center"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  viewBookingDetails(booking);
+                }}
+              >
+                <Eye size={16} className="mr-1" /> View Details
+              </button>
+            )
+          }
+        ]}
         data={bookings}
         keyExtractor={(item) => item.id}
         filterable={true}
         searchable={true}
         exportable={true}
-        filterOptions={filterOptions}
+        filterOptions={[
+          {
+            key: 'status' as keyof BikeBooking,
+            label: 'Status',
+            options: [
+              { label: 'Completed', value: 'Completed' },
+              { label: 'Cancelled', value: 'Cancelled' },
+              { label: 'Pending', value: 'Pending' }
+            ]
+          },
+          {
+            key: 'vehicleType' as keyof BikeBooking,
+            label: 'Vehicle Type',
+            options: [
+              { label: 'Scooter', value: 'Scooter' },
+              { label: 'MotorBike', value: 'MotorBike' }
+            ]
+          }
+        ]}
       />
 
       {/* Booking Details Sheet */}

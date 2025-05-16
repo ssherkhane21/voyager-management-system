@@ -1,4 +1,3 @@
-
 import { 
   BookingSummary, 
   BusOperator, 
@@ -500,6 +499,8 @@ export const commissions: Commission[] = [
     id: 'COM001',
     serviceType: 'Bus',
     percentage: 10,
+    fixedRate: null,
+    commissionType: 'percentage',
     effectiveFrom: '2023-01-01',
     isActive: true
   },
@@ -507,6 +508,8 @@ export const commissions: Commission[] = [
     id: 'COM002',
     serviceType: 'Hotel',
     percentage: 15,
+    fixedRate: null,
+    commissionType: 'percentage',
     effectiveFrom: '2023-01-01',
     isActive: true
   },
@@ -514,6 +517,8 @@ export const commissions: Commission[] = [
     id: 'COM003',
     serviceType: 'Taxi',
     percentage: 12,
+    fixedRate: null,
+    commissionType: 'percentage',
     effectiveFrom: '2023-01-01',
     isActive: true
   },
@@ -521,6 +526,8 @@ export const commissions: Commission[] = [
     id: 'COM004',
     serviceType: 'Bike',
     percentage: 8,
+    fixedRate: null,
+    commissionType: 'percentage',
     effectiveFrom: '2023-01-01',
     isActive: true
   }
@@ -532,7 +539,10 @@ export const coupons: Coupon[] = [
     name: 'Welcome Offer',
     code: 'WELCOME10',
     serviceType: 'All',
+    discountType: 'percentage',
     discountPercentage: 10,
+    discountAmount: null,
+    startDate: '2023-01-01',
     expiryDate: '2023-12-31',
     isActive: true
   },
@@ -541,7 +551,10 @@ export const coupons: Coupon[] = [
     name: 'Summer Special',
     code: 'SUMMER15',
     serviceType: 'Hotel',
+    discountType: 'percentage',
     discountPercentage: 15,
+    discountAmount: null,
+    startDate: '2023-01-01',
     expiryDate: '2023-08-31',
     isActive: true
   },
@@ -550,7 +563,10 @@ export const coupons: Coupon[] = [
     name: 'First Ride',
     code: 'RIDE20',
     serviceType: 'Taxi',
+    discountType: 'percentage',
     discountPercentage: 20,
+    discountAmount: null,
+    startDate: '2023-01-01',
     expiryDate: '2023-12-31',
     isActive: true
   },
@@ -559,7 +575,10 @@ export const coupons: Coupon[] = [
     name: 'Weekend Travel',
     code: 'WEEKEND12',
     serviceType: 'Bus',
+    discountType: 'percentage',
     discountPercentage: 12,
+    discountAmount: null,
+    startDate: '2023-01-01',
     expiryDate: '2023-12-31',
     isActive: true
   },
@@ -568,7 +587,10 @@ export const coupons: Coupon[] = [
     name: 'Bike Offer',
     code: 'BIKE15',
     serviceType: 'Bike',
+    discountType: 'percentage',
     discountPercentage: 15,
+    discountAmount: null,
+    startDate: '2023-01-01',
     expiryDate: '2023-09-30',
     isActive: true
   }

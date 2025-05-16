@@ -17,8 +17,8 @@ import UploadField from '@/components/ui/UploadField';
 const mockBikeRider: BikeRider = {
   id: "1",
   name: "Alex Johnson",
-  mobile: "9876543210",
   email: "alex.j@example.com",
+  mobile: "9876543210",
   status: "Approved",
   age: 28,
   address: "456 Park Avenue, Chennai",
@@ -39,7 +39,7 @@ const BikeRiderDetails = () => {
   // We would fetch real data here in a production app
   const [rider, setRider] = useState<BikeRider>(
     isNewRider 
-      ? { id: '', name: '', mobile: '', email: '', status: 'Approved', vehicleType: 'Scooter' } 
+      ? { id: '', name: '', email: '', mobile: '', status: 'Approved', vehicleType: 'Scooter' } 
       : mockBikeRider
   );
 
