@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Search, Download, Filter } from 'lucide-react';
 
 interface Column<T> {
-  key: keyof T | 'actions';
+  key: keyof T | string;  // Changed from 'keyof T | 'actions'' to allow any string
   header: string;
   render?: (item: T) => React.ReactNode;
   width?: string;
@@ -50,7 +50,11 @@ function DataTable<T>({
     // Check if the item matches all selected filters
     const matchesFilters = Object.entries(filters).every(([key, value]) => {
       if (!value) return true;
-      return String(item[key as keyof T]).toLowerCase() === value.toLowerCase();
+      // Handle the case where key might not be a keyof T
+      const itemValue = item[key as keyof T];
+      return itemValue !== undefined 
+        ? String(itemValue).toLowerCase() === value.toLowerCase()
+        : true;
     });
     
     return matchesSearch && matchesFilters;
@@ -130,7 +134,7 @@ function DataTable<T>({
               <div key={String(option.key)} className="flex flex-col">
                 <label className="text-xs mb-1 text-gray-600">{option.label}</label>
                 <select
-                  value={filters[option.key as string] || ''}
+                  value={filters[String(option.key)] || ''}
                   onChange={(e) => handleFilterChange(String(option.key), e.target.value)}
                   className="filter-select"
                 >
@@ -181,7 +185,7 @@ function DataTable<T>({
                     <td key={`${keyExtractor(item)}-${String(column.key)}`}>
                       {column.render
                         ? column.render(item)
-                        : column.key !== 'actions'
+                        : column.key !== 'actions' && typeof column.key === 'string' && column.key in item
                         ? String(item[column.key as keyof T])
                         : null}
                     </td>

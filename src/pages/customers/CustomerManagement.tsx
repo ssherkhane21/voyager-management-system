@@ -96,7 +96,7 @@ const CustomerManagement = () => {
     { key: 'mobile' as keyof Customer, header: 'Mobile' },
     { key: 'email' as keyof Customer, header: 'Email ID' },
     { 
-      key: 'history' as 'history',
+      key: 'history' as string, // Changed from 'history' as 'history' to 'history' as string
       header: 'Booking History',
       render: (customer: Customer) => (
         <button 
@@ -112,7 +112,7 @@ const CustomerManagement = () => {
       )
     },
     { 
-      key: 'actions' as 'actions', 
+      key: 'actions' as string, // Changed from 'actions' as 'actions' to 'actions' as string
       header: 'Actions',
       render: (customer: Customer) => (
         <button 
