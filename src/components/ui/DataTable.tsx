@@ -2,20 +2,20 @@
 import React, { useState } from 'react';
 import { Search, Download, Filter } from 'lucide-react';
 
-interface Column<T> {
+interface Column<T extends object> {
   key: keyof T | string;  // Changed from 'keyof T | 'actions'' to allow any string
   header: string;
   render?: (item: T) => React.ReactNode;
   width?: string;
 }
 
-interface FilterOption<T> {
+interface FilterOption<T extends object> {
   key: keyof T | string;
   label: string;
   options: { label: string; value: string }[];
 }
 
-interface DataTableProps<T> {
+interface DataTableProps<T extends object> {
   columns: Column<T>[];
   data: T[];
   onRowClick?: (item: T) => void;
@@ -26,7 +26,7 @@ interface DataTableProps<T> {
   filterOptions?: FilterOption<T>[];
 }
 
-function DataTable<T>({
+function DataTable<T extends object>({
   columns,
   data,
   onRowClick,
