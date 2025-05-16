@@ -156,11 +156,11 @@ const BikeRiderDetails = () => {
                   />
                 </div>
                 <div className="col-span-2">
-                  <label className="block text-sm font-medium mb-1">ID Proofs</label>
                   <UploadField 
+                    label="ID Proofs"
                     value={rider.idProofs ? rider.idProofs[0] : undefined} 
                     onChange={(value) => handleChange('idProofs', [value])}
-                    multiple
+                    multiple={true}
                   />
                   <p className="text-xs text-gray-500 mt-1">Upload all relevant ID proofs (Aadhar, PAN, etc.)</p>
                 </div>
@@ -196,25 +196,25 @@ const BikeRiderDetails = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Vehicle Insurance</label>
                   <UploadField 
+                    label="Vehicle Insurance"
                     value={rider.vehicleInsurance} 
                     onChange={(value) => handleChange('vehicleInsurance', value)}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Registration Certificate</label>
                   <UploadField 
+                    label="Registration Certificate"
                     value={rider.vehicleRegistrationCertificate} 
                     onChange={(value) => handleChange('vehicleRegistrationCertificate', value)}
                   />
                 </div>
                 <div className="col-span-2">
-                  <label className="block text-sm font-medium mb-1">Vehicle Photos</label>
                   <UploadField 
+                    label="Vehicle Photos"
                     value={rider.vehiclePhotos ? rider.vehiclePhotos[0] : undefined} 
                     onChange={(value) => handleChange('vehiclePhotos', [value])}
-                    multiple
+                    multiple={true}
                   />
                 </div>
               </div>

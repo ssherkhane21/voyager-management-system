@@ -7,13 +7,15 @@ interface UploadFieldProps {
   accept?: string;
   onChange: (file: File | null) => void;
   value?: string | null;
+  multiple?: boolean;
 }
 
 const UploadField = ({ 
   label, 
   accept = "image/jpeg, image/png, application/pdf", 
   onChange,
-  value
+  value,
+  multiple = false
 }: UploadFieldProps) => {
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(value || null);
@@ -76,6 +78,7 @@ const UploadField = ({
                     className="sr-only"
                     accept={accept}
                     onChange={handleFileChange}
+                    multiple={multiple}
                   />
                 </label>
                 <p className="pl-1">or drag and drop</p>

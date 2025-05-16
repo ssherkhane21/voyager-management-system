@@ -127,8 +127,8 @@ const HotelManagerDetails = () => {
             <CardContent className="pt-6 space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium mb-1">Profile Photo</label>
                   <UploadField 
+                    label="Profile Photo"
                     value={manager.profilePhoto} 
                     onChange={(value) => handleChange('profilePhoto', value)}
                   />
@@ -172,18 +172,18 @@ const HotelManagerDetails = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Business License</label>
                   <UploadField 
+                    label="Business License"
                     value={manager.businessLicense} 
                     onChange={(value) => handleChange('businessLicense', value)}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Hotel Photos</label>
                   <UploadField 
+                    label="Hotel Photos"
                     value={manager.hotelPhotos ? manager.hotelPhotos[0] : undefined} 
                     onChange={(value) => handleChange('hotelPhotos', [value])}
-                    multiple
+                    multiple={true}
                   />
                 </div>
                 <div>
@@ -272,14 +272,14 @@ const HotelManagerDetails = () => {
                   />
                 </div>
                 <div className="col-span-2">
-                  <label className="block text-sm font-medium mb-1">Room Photos</label>
                   <UploadField 
+                    label="Room Photos"
                     value={manager.standardRooms?.photos?.[0]} 
                     onChange={(value) => handleChange('standardRooms', {
                       ...manager.standardRooms,
                       photos: [value]
                     })}
-                    multiple
+                    multiple={true}
                   />
                 </div>
               </div>
@@ -319,14 +319,14 @@ const HotelManagerDetails = () => {
                   />
                 </div>
                 <div className="col-span-2">
-                  <label className="block text-sm font-medium mb-1">Room Photos</label>
                   <UploadField 
+                    label="Room Photos"
                     value={manager.luxuryRooms?.photos?.[0]} 
                     onChange={(value) => handleChange('luxuryRooms', {
                       ...manager.luxuryRooms,
                       photos: [value]
                     })}
-                    multiple
+                    multiple={true}
                   />
                 </div>
               </div>
@@ -356,8 +356,8 @@ const HotelManagerDetails = () => {
                   />
                 </div>
                 <div className="col-span-2">
-                  <label className="block text-sm font-medium mb-1">Policy Documents</label>
                   <UploadField 
+                    label="Policy Documents"
                     value={manager.policyDocuments} 
                     onChange={(value) => handleChange('policyDocuments', value)}
                   />
@@ -379,22 +379,22 @@ const HotelManagerDetails = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Bank Account Details</label>
                   <UploadField 
+                    label="Bank Account Details"
                     value={manager.bankAccountDetails} 
                     onChange={(value) => handleChange('bankAccountDetails', value)}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">ID Card Front</label>
                   <UploadField 
+                    label="ID Card Front"
                     value={manager.idCardFront} 
                     onChange={(value) => handleChange('idCardFront', value)}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">ID Card Back</label>
                   <UploadField 
+                    label="ID Card Back"
                     value={manager.idCardBack} 
                     onChange={(value) => handleChange('idCardBack', value)}
                   />
