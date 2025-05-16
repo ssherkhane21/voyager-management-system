@@ -12,6 +12,8 @@ import Dashboard from "./pages/Dashboard";
 import BusOperators from "./pages/bus/BusOperators";
 import BusOperatorDetails from "./pages/bus/BusOperatorDetails";
 import BusBookings from "./pages/bus/BusBookings";
+import BusBookingDetails from "./pages/bus/BusBookingDetails";
+import BusList from "./pages/bus/BusList";
 
 // Hotel Management
 import HotelManagers from "./pages/hotel/HotelManagers";
@@ -27,6 +29,12 @@ import TaxiBookings from "./pages/taxi/TaxiBookings";
 import BikeRiders from "./pages/bike/BikeRiders";
 import BikeRiderDetails from "./pages/bike/BikeRiderDetails";
 import BikeBookings from "./pages/bike/BikeBookings";
+
+// Customer Management
+import CustomerManagement from "./pages/customers/CustomerManagement";
+
+// User Management
+import UserManagement from "./pages/users/UserManagement";
 
 // Commission, Coupons, Wallet
 import CommissionManagement from "./pages/commission/CommissionManagement";
@@ -49,7 +57,9 @@ const App = () => (
             {/* Bus Management Routes */}
             <Route path="/bus-management/operators" element={<BusOperators />} />
             <Route path="/bus-management/operators/:id" element={<BusOperatorDetails />} />
+            <Route path="/bus-management/operators/:operatorId/buses" element={<BusList />} />
             <Route path="/bus-management/bookings" element={<BusBookings />} />
+            <Route path="/bus-management/bookings/:bookingId" element={<BusBookingDetails />} />
             
             {/* Hotel Management Routes */}
             <Route path="/hotel-management/managers" element={<HotelManagers />} />
@@ -65,6 +75,12 @@ const App = () => (
             <Route path="/bike-management/riders" element={<BikeRiders />} />
             <Route path="/bike-management/riders/:id" element={<BikeRiderDetails />} />
             <Route path="/bike-management/bookings" element={<BikeBookings />} />
+            
+            {/* Customer Management Routes */}
+            <Route path="/customer-management" element={<CustomerManagement />} />
+            
+            {/* User Management Routes */}
+            <Route path="/user-management" element={<UserManagement />} />
             
             {/* Other Management Routes */}
             <Route path="/commission-management" element={<CommissionManagement />} />

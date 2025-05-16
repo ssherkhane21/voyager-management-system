@@ -24,7 +24,13 @@ const BusOperators = () => {
       key: 'numberOfBuses' as keyof BusOperator, 
       header: 'Number of Buses',
       render: (operator: BusOperator) => (
-        <span className="cursor-pointer text-blue-600 hover:underline">
+        <span 
+          className="cursor-pointer text-blue-600 hover:underline"
+          onClick={(e) => {
+            e.stopPropagation();
+            navigate(`/bus-management/operators/${operator.id}/buses`);
+          }}
+        >
           {operator.numberOfBuses}
         </span>
       )

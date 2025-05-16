@@ -18,7 +18,8 @@ const mockCoupons: Coupon[] = [
     code: "WELCOME10",
     serviceType: "All",
     discountPercentage: 10,
-    expiryDate: "2023-12-31",
+    startDate: "2023-06-01T00:00",
+    expiryDate: "2023-12-31T23:59",
     isActive: true
   },
   {
@@ -27,7 +28,8 @@ const mockCoupons: Coupon[] = [
     code: "SUMMER20",
     serviceType: "Hotel",
     discountPercentage: 20,
-    expiryDate: "2023-09-30",
+    startDate: "2023-05-01T00:00",
+    expiryDate: "2023-09-30T23:59",
     isActive: true
   },
   {
@@ -36,7 +38,8 @@ const mockCoupons: Coupon[] = [
     code: "RIDE15",
     serviceType: "Taxi",
     discountPercentage: 15,
-    expiryDate: "2023-10-15",
+    startDate: "2023-07-01T00:00",
+    expiryDate: "2023-10-15T23:59",
     isActive: true
   },
   {
@@ -45,7 +48,8 @@ const mockCoupons: Coupon[] = [
     code: "BUS25",
     serviceType: "Bus",
     discountPercentage: 25,
-    expiryDate: "2023-11-30",
+    startDate: "2023-06-15T00:00",
+    expiryDate: "2023-11-30T23:59",
     isActive: false
   }
 ];
@@ -60,7 +64,8 @@ const Coupons = () => {
     code: '',
     serviceType: 'All',
     discountPercentage: 0,
-    expiryDate: new Date().toISOString().split('T')[0],
+    startDate: new Date().toISOString().split('.')[0].slice(0, 16),
+    expiryDate: new Date(new Date().setMonth(new Date().getMonth() + 1)).toISOString().split('.')[0].slice(0, 16),
     isActive: true
   });
 
@@ -72,7 +77,8 @@ const Coupons = () => {
       code: '',
       serviceType: 'All',
       discountPercentage: 0,
-      expiryDate: new Date().toISOString().split('T')[0],
+      startDate: new Date().toISOString().split('.')[0].slice(0, 16),
+      expiryDate: new Date(new Date().setMonth(new Date().getMonth() + 1)).toISOString().split('.')[0].slice(0, 16),
       isActive: true
     });
     setIsDialogOpen(true);
@@ -88,7 +94,41 @@ const Coupons = () => {
     setCurrentCoupon(prev => ({ ...prev, [field]: value }));
   };
 
+  const formatDateTime = (dateTimeString: string) => {
+    const date = new Date(dateTimeString);
+    return date.toLocaleString('en-US', { 
+      year: 'numeric', 
+      month: 'short', 
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
   const handleSaveCoupon = () => {
+    // Validate form
+    if (!currentCoupon.name || !currentCoupon.code) {
+      toast({
+        title: "Validation Error",
+        description: "Please fill in all required fields",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Validate the dates
+    const startDate = new Date(currentCoupon.startDate!);
+    const endDate = new Date(currentCoupon.expiryDate);
+    
+    if (endDate <= startDate) {
+      toast({
+        title: "Invalid Date Range",
+        description: "Expiry date must be after start date",
+        variant: "destructive"
+      });
+      return;
+    }
+
     if (isEditing) {
       setCoupons(prev => prev.map(item => item.id === currentCoupon.id ? currentCoupon : item));
       toast({
@@ -132,7 +172,16 @@ const Coupons = () => {
       header: 'Discount',
       render: (coupon: Coupon) => <span>{coupon.discountPercentage}%</span>
     },
-    { key: 'expiryDate' as keyof Coupon, header: 'Expiry Date' },
+    { 
+      key: 'startDate' as keyof Coupon, 
+      header: 'Start Date',
+      render: (coupon: Coupon) => <span>{coupon.startDate ? formatDateTime(coupon.startDate) : 'N/A'}</span>
+    },
+    { 
+      key: 'expiryDate' as keyof Coupon, 
+      header: 'Expiry Date',
+      render: (coupon: Coupon) => <span>{formatDateTime(coupon.expiryDate)}</span>
+    },
     { 
       key: 'isActive' as keyof Coupon, 
       header: 'Status',
@@ -268,9 +317,18 @@ const Coupons = () => {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium">Expiry Date</label>
+              <label className="text-sm font-medium">Start Date and Time</label>
               <Input
-                type="date"
+                type="datetime-local"
+                value={currentCoupon.startDate}
+                onChange={(e) => handleInputChange('startDate', e.target.value)}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Expiry Date and Time</label>
+              <Input
+                type="datetime-local"
                 value={currentCoupon.expiryDate}
                 onChange={(e) => handleInputChange('expiryDate', e.target.value)}
               />

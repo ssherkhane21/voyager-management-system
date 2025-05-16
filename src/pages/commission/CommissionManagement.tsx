@@ -16,28 +16,32 @@ const mockCommissions: Commission[] = [
     id: "1",
     serviceType: "Bus",
     percentage: 10,
-    effectiveFrom: "2023-01-01",
+    effectiveFrom: "2023-01-01T00:00",
+    effectiveTo: "2023-12-31T23:59",
     isActive: true
   },
   {
     id: "2",
     serviceType: "Hotel",
     percentage: 12,
-    effectiveFrom: "2023-01-01",
+    effectiveFrom: "2023-01-01T00:00",
+    effectiveTo: "2023-12-31T23:59",
     isActive: true
   },
   {
     id: "3",
     serviceType: "Taxi",
     percentage: 15,
-    effectiveFrom: "2023-01-01",
+    effectiveFrom: "2023-01-01T00:00",
+    effectiveTo: "2023-12-31T23:59",
     isActive: true
   },
   {
     id: "4",
     serviceType: "Bike",
     percentage: 8,
-    effectiveFrom: "2023-01-01",
+    effectiveFrom: "2023-01-01T00:00",
+    effectiveTo: "2023-12-31T23:59",
     isActive: true
   }
 ];
@@ -50,7 +54,8 @@ const CommissionManagement = () => {
     id: '',
     serviceType: 'Bus',
     percentage: 0,
-    effectiveFrom: new Date().toISOString().split('T')[0],
+    effectiveFrom: new Date().toISOString().split('.')[0].slice(0, 16),
+    effectiveTo: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('.')[0].slice(0, 16),
     isActive: true
   });
 
@@ -60,7 +65,8 @@ const CommissionManagement = () => {
       id: Date.now().toString(),
       serviceType: 'Bus',
       percentage: 0,
-      effectiveFrom: new Date().toISOString().split('T')[0],
+      effectiveFrom: new Date().toISOString().split('.')[0].slice(0, 16),
+      effectiveTo: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('.')[0].slice(0, 16),
       isActive: true
     });
     setIsDialogOpen(true);
@@ -77,6 +83,19 @@ const CommissionManagement = () => {
   };
 
   const handleSaveCommission = () => {
+    // Validate the dates
+    const startDate = new Date(currentCommission.effectiveFrom);
+    const endDate = new Date(currentCommission.effectiveTo!);
+    
+    if (endDate <= startDate) {
+      toast({
+        title: "Invalid Date Range",
+        description: "End date must be after start date",
+        variant: "destructive"
+      });
+      return;
+    }
+
     if (isEditing) {
       setCommissions(prev => prev.map(item => item.id === currentCommission.id ? currentCommission : item));
       toast({
@@ -111,6 +130,17 @@ const CommissionManagement = () => {
     }
   };
 
+  const formatDateTime = (dateTimeString: string) => {
+    const date = new Date(dateTimeString);
+    return date.toLocaleString('en-US', { 
+      year: 'numeric', 
+      month: 'short', 
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
   const columns = [
     { key: 'serviceType' as keyof Commission, header: 'Service Type' },
     { 
@@ -118,7 +148,16 @@ const CommissionManagement = () => {
       header: 'Percentage',
       render: (commission: Commission) => <span>{commission.percentage}%</span>
     },
-    { key: 'effectiveFrom' as keyof Commission, header: 'Effective From' },
+    { 
+      key: 'effectiveFrom' as keyof Commission, 
+      header: 'Effective From',
+      render: (commission: Commission) => <span>{formatDateTime(commission.effectiveFrom)}</span>
+    },
+    { 
+      key: 'effectiveTo' as keyof Commission, 
+      header: 'Effective To',
+      render: (commission: Commission) => <span>{commission.effectiveTo ? formatDateTime(commission.effectiveTo) : 'No End Date'}</span>
+    },
     { 
       key: 'isActive' as keyof Commission, 
       header: 'Status',
@@ -213,11 +252,20 @@ const CommissionManagement = () => {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium">Effective From</label>
+              <label className="text-sm font-medium">Start Date and Time</label>
               <Input
-                type="date"
+                type="datetime-local"
                 value={currentCommission.effectiveFrom}
                 onChange={(e) => handleInputChange('effectiveFrom', e.target.value)}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium">End Date and Time</label>
+              <Input
+                type="datetime-local"
+                value={currentCommission.effectiveTo}
+                onChange={(e) => handleInputChange('effectiveTo', e.target.value)}
               />
             </div>
 

@@ -37,6 +37,19 @@ export interface BusOperator {
   accountHolderName?: string;
 }
 
+export interface Bus {
+  id: string;
+  registrationNumber: string;
+  operatorId: string;
+  type: string;
+  capacity: number;
+  status: string;
+  manufactureYear: number;
+  lastMaintenance: string;
+  insuranceValidTill: string;
+  route: string;
+}
+
 export interface HotelManager {
   id: string;
   name: string;
@@ -190,6 +203,7 @@ export interface Coupon {
   code: string;
   serviceType: 'Bus' | 'Hotel' | 'Taxi' | 'Bike' | 'All';
   discountPercentage: number;
+  startDate?: string;
   expiryDate: string;
   isActive: boolean;
 }

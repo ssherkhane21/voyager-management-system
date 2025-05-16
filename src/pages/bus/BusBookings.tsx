@@ -1,4 +1,6 @@
 
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
 import DataTable from '@/components/ui/DataTable';
 import StatusBadge from '@/components/ui/StatusBadge';
@@ -7,6 +9,8 @@ import { BusBooking } from '@/types/admin';
 import { Eye } from 'lucide-react';
 
 const BusBookings = () => {
+  const navigate = useNavigate();
+
   const columns = [
     { key: 'id' as keyof BusBooking, header: 'ID' },
     { key: 'busRegistrationNumber' as keyof BusBooking, header: 'Bus Reg. No.' },
@@ -30,7 +34,13 @@ const BusBookings = () => {
       key: 'actions' as 'actions', 
       header: 'Actions',
       render: (booking: BusBooking) => (
-        <button className="action-button flex items-center">
+        <button 
+          onClick={(e) => {
+            e.stopPropagation();
+            navigate(`/bus-management/bookings/${booking.id}`);
+          }}
+          className="action-button flex items-center"
+        >
           <Eye size={16} className="mr-1" />
           View Details
         </button>
@@ -71,6 +81,10 @@ const BusBookings = () => {
     }
   ];
 
+  const handleRowClick = (booking: BusBooking) => {
+    navigate(`/bus-management/bookings/${booking.id}`);
+  };
+
   return (
     <Layout>
       <div className="mb-6">
@@ -82,6 +96,7 @@ const BusBookings = () => {
         columns={columns}
         data={busBookings}
         keyExtractor={(item) => item.id}
+        onRowClick={handleRowClick}
         filterOptions={filterOptions}
       />
     </Layout>
