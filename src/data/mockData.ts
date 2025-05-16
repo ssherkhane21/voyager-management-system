@@ -1,3 +1,4 @@
+
 import { 
   BookingSummary, 
   BusOperator, 
@@ -13,7 +14,8 @@ import {
   Commission,
   Coupon,
   WalletTransaction,
-  Notification
+  Notification,
+  ChartData
 } from '../types/admin';
 
 export const bookingSummary: BookingSummary = {

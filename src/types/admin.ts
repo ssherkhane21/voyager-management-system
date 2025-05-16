@@ -35,6 +35,15 @@ export interface BusOperator {
   numberOfBuses?: number;
   busCount?: number;
   joinDate?: string;
+  // Additional properties used in BusOperatorDetails.tsx
+  profilePhoto?: string;
+  idCardFront?: string;
+  idCardBack?: string;
+  businessLicense?: string;
+  bankName?: string;
+  bankAccountNumber?: string;
+  accountHolderName?: string;
+  bankAccountDetails?: string;
 }
 
 export interface Bus {
@@ -43,8 +52,12 @@ export interface Bus {
   registrationNumber: string;
   type: string;
   capacity: number;
-  amenities: string[];
+  amenities?: string[];
   status: 'active' | 'inactive' | 'maintenance';
+  manufactureYear?: number;
+  lastMaintenance?: string;
+  insuranceValidTill?: string;
+  route?: string;
 }
 
 export interface BusBooking {
@@ -73,6 +86,35 @@ export interface HotelManager {
   status: 'active' | 'inactive' | 'pending' | 'Approved' | 'Rejected' | 'Submitted' | 'Blocked' | 'Pending';
   roomCount?: number;
   joinDate?: string;
+  // Additional properties used in HotelManagerDetails.tsx
+  profilePhoto?: string;
+  hotelName?: string;
+  businessLicense?: string;
+  hotelPhotos?: string[];
+  locality?: string;
+  landmark?: string;
+  pinCode?: string;
+  totalRooms?: number;
+  standardRooms?: {
+    price: number;
+    numberOfRooms: number;
+    amenities: string[];
+    photos: string[];
+  };
+  luxuryRooms?: {
+    price: number;
+    numberOfRooms: number;
+    amenities: string[];
+    photos: string[];
+  };
+  checkInTime?: string;
+  checkOutTime?: string;
+  amenities?: string[];
+  policyDocuments?: string;
+  bankAccountNumber?: string;
+  bankAccountDetails?: string;
+  idCardFront?: string;
+  idCardBack?: string;
 }
 
 export interface HotelBooking {
