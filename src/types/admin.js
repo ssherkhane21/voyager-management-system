@@ -150,4 +150,3 @@ BikeRider {
 
 // This file now serves as documentation for the shape of objects used throughout the application
 // Since JavaScript doesn't have types, we've converted this to comments for reference purposes
-
