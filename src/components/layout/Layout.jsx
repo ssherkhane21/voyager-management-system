@@ -2,7 +2,7 @@
 import { ReactNode } from 'react';
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
-import { useSidebar } from '@/context/SidebarContext';
+import { useSidebar } from '@/context/SidebarContext.jsx';
 
 const Layout = ({ children }) => {
   const { isOpen } = useSidebar();
