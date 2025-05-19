@@ -1,0 +1,26 @@
+
+import { ReactNode } from 'react';
+import Sidebar from './Sidebar';
+import Navbar from './Navbar';
+import { useSidebar } from '@/context/SidebarContext';
+
+const Layout = ({ children }) => {
+  const { isOpen } = useSidebar();
+
+  return (
+    <div className="flex min-h-screen bg-gray-100">
+      <Sidebar />
+      <div 
+        className="flex-1 transition-all duration-300 ease-in-out"
+        style={{ marginLeft: isOpen ? '16rem' : '5rem' }}
+      >
+        <Navbar />
+        <main className="p-6 pt-24">
+          {children}
+        </main>
+      </div>
+    </div>
+  );
+};
+
+export default Layout;
